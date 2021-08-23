@@ -1,5 +1,7 @@
-.idea
-.vs
-Debug
-obj
+.idea/
 .vs/
+Debug/
+bin/
+obj/
+
+Folder.DotSettings.user

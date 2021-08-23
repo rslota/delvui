@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Numerics;
-using Dalamud.Game.ClientState.Structs.JobGauge;
-using Dalamud.Plugin;
+using Dalamud.Game.ClientState;
+using Dalamud.Game.ClientState.JobGauge;
+using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects;
+using Dalamud.Game.Gui;
 using ImGuiNET;
 
-namespace DelvUIPlugin.Interface {
+namespace DelvUI.Interface {
     public class DancerHudWindow : HudWindow {
         public override uint JobId => 38;
         
@@ -13,7 +16,21 @@ namespace DelvUIPlugin.Interface {
         private new static int XOffset => 127;
         private new static int YOffset => 466;
         
-        public DancerHudWindow(DalamudPluginInterface pluginInterface, PluginConfiguration pluginConfiguration) : base(pluginInterface, pluginConfiguration) { }
+        public DancerHudWindow(
+            ClientState clientState, 
+            GameGui gameGui,
+            JobGauges jobGauges,
+            ObjectTable objectTable, 
+            PluginConfiguration pluginConfiguration, 
+            TargetManager targetManager
+        ) : base(
+            clientState,
+            gameGui,
+            jobGauges,
+            objectTable,
+            pluginConfiguration,
+            targetManager
+        ) { }
 
         protected override void Draw(bool _) {
             DrawHealthBar();
@@ -23,7 +40,7 @@ namespace DelvUIPlugin.Interface {
         }
 
         protected override void DrawPrimaryResourceBar() {
-            var gauge = PluginInterface.ClientState.JobGauges.Get<DNCGauge>();
+            var gauge = JobGauges.Get<DNCGauge>();
             
             const int xPadding = 2;
             var barWidth = (BarWidth - xPadding) / 2;
@@ -78,7 +95,7 @@ namespace DelvUIPlugin.Interface {
         }
         
         private void DrawSecondaryResourceBar() {
-            var gauge = PluginInterface.ClientState.JobGauges.Get<DNCGauge>();
+            var gauge = JobGauges.Get<DNCGauge>();
 
             const int xPadding = 2;
             var barWidth = (BarWidth - xPadding * 3) / 4;
@@ -91,14 +108,11 @@ namespace DelvUIPlugin.Interface {
             for (var i = 0; i <= 4 - 1; i++)
             {
                 drawList.AddRectFilled(cursorPos, cursorPos + barSize, 0x88000000);
-                if (gauge.NumFeathers > i)
+                if (gauge.Feathers > i)
                 {
                     drawList.AddRectFilled(cursorPos, cursorPos + new Vector2(barSize.X, barSize.Y), 0xFF4FD29B);
                 }
-                else
-                {
 
-                }
                 drawList.AddRect(cursorPos, cursorPos + barSize, 0xFF000000);
                 cursorPos = new Vector2(cursorPos.X + barWidth + xPadding, cursorPos.Y);
             }

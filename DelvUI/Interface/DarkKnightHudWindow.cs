@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Numerics;
-using Dalamud.Game.ClientState.Structs.JobGauge;
-using Dalamud.Plugin;
+using Dalamud.Game.ClientState;
+using Dalamud.Game.ClientState.JobGauge;
+using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects;
+using Dalamud.Game.Gui;
 using ImGuiNET;
 
-namespace DelvUIPlugin.Interface {
+namespace DelvUI.Interface {
     public class DarkKnightHudWindow : HudWindow {
         public override uint JobId => 32;
 
@@ -13,7 +17,21 @@ namespace DelvUIPlugin.Interface {
         private new int XOffset => 127;
         private new int YOffset => 466;
         
-        public DarkKnightHudWindow(DalamudPluginInterface pluginInterface, PluginConfiguration pluginConfiguration) : base(pluginInterface, pluginConfiguration) { }
+        public DarkKnightHudWindow(
+            ClientState clientState, 
+            GameGui gameGui,
+            JobGauges jobGauges,
+            ObjectTable objectTable, 
+            PluginConfiguration pluginConfiguration, 
+            TargetManager targetManager
+        ) : base(
+            clientState,
+            gameGui,
+            jobGauges,
+            objectTable,
+            pluginConfiguration,
+            targetManager
+        ) { }
 
         protected override void Draw(bool _) {
             DrawHealthBar();
@@ -23,8 +41,9 @@ namespace DelvUIPlugin.Interface {
         }
 
         protected override void DrawPrimaryResourceBar() {
-            var actor = PluginInterface.ClientState.LocalPlayer;
+            Debug.Assert(ClientState.LocalPlayer != null, "ClientState.LocalPlayer != null");
 
+            var actor = ClientState.LocalPlayer;
             const int xPadding = 2;
             var barWidth = (BarWidth - xPadding * 2)  / 3.0f;
             var barSize = new Vector2(barWidth, BarHeight);
@@ -68,7 +87,7 @@ namespace DelvUIPlugin.Interface {
         }
         
         private void DrawSecondaryResourceBar() {
-            var gauge = PluginInterface.ClientState.JobGauges.Get<DRKGauge>();
+            var gauge = JobGauges.Get<DRKGauge>();
             
             const int xPadding = 2;
             var barWidth = (BarWidth - xPadding) / 2;

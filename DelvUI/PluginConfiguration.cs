@@ -5,7 +5,7 @@ using Dalamud.Plugin;
 using ImGuiNET;
 using Newtonsoft.Json;
 
-namespace DelvUIPlugin {
+namespace DelvUI {
     public class PluginConfiguration : IPluginConfiguration {
         public int Version { get; set; }
 
@@ -55,7 +55,7 @@ namespace DelvUIPlugin {
         public void BuildColorMap() {
             JobColorMap = new Dictionary<uint, Dictionary<string, uint>>
             {
-                [Jobs.PLD] = new Dictionary<string, uint>
+                [Jobs.PLD] = new()
                 {
                     ["base"] = ImGui.ColorConvertFloat4ToU32(JobColorPLD),
                     ["background"] = ImGui.ColorConvertFloat4ToU32(JobColorPLD.AdjustColor(-.8f)),

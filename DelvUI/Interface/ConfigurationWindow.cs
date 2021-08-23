@@ -2,7 +2,7 @@
 using Dalamud.Plugin;
 using ImGuiNET;
 
-namespace DelvUIPlugin.Interface {
+namespace DelvUI.Interface {
     public class ConfigurationWindow {
         public bool IsVisible = false;
         private readonly Plugin _plugin;
