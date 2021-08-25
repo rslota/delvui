@@ -9,7 +9,7 @@
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>DelvUIPlugin</RootNamespace>
         <AssemblyName>DelvUIPlugin</AssemblyName>
-        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <LangVersion>8</LangVersion>
     </PropertyGroup>
