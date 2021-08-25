@@ -7,30 +7,30 @@ on:
     branches: [ main ]
 
 jobs:
-  package-windows:
-    runs-on: windows-latest
+  # package-windows:
+  #   runs-on: windows-latest
  
-    steps:
-    - uses: actions/checkout@v1
-      name: Checkout Code
+  #   steps:
+  #   - uses: actions/checkout@v1
+  #     name: Checkout Code
      
-    - name: Setup MSBuild Path
-      uses: warrenbuckley/Setup-MSBuild@v1
+  #   - name: Setup MSBuild Path
+  #     uses: warrenbuckley/Setup-MSBuild@v1
        
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.2
+  #   - name: Setup NuGet
+  #     uses: NuGet/setup-nuget@v1.0.2
      
-    - name: Restore NuGet Packages
-      run: nuget restore SimpleFrameworkApp.sln
+  #   - name: Restore NuGet Packages
+  #     run: nuget restore SimpleFrameworkApp.sln
  
-    - name: Build and Publish Web App
-      run: msbuild SimpleFrameworkApp.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
+  #   - name: Build and Publish Web App
+  #     run: msbuild SimpleFrameworkApp.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
  
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: published_webapp
-        path: bin\Release\Publish
+  #   - name: Upload Artifact
+  #     uses: actions/upload-artifact@v1.0.0
+  #     with:
+  #       name: published_webapp
+  #       path: bin\Release\Publish
   
   package:
     runs-on: ubuntu-latest
@@ -49,7 +49,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --framework net48
     - name: Publish
       run: dotnet publish DelvUIPlugin.csproj -c Release -o DelvUIPlugin
     - name: Upload a Build Artifact
