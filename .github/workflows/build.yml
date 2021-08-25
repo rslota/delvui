@@ -17,6 +17,8 @@ jobs:
     #     dotnet-version: 5.0.x
     - name: Install dotnet-sdk-5.0
       run: sudo apt-get install dotnet-sdk-5.0
+    - name: Install dotnet-targeting-pack
+      run: dotnet tool install --global dotnet-targeting-pack
     - name: Install Targeting Pack
       run: dotnet targeting-pack install net480
     - name: Restore dependencies
