@@ -7,21 +7,20 @@ on:
     branches: [ main ]
 
 jobs:
-  # package-windows:
-  #   runs-on: windows-latest
+  package-windows:
+    runs-on: windows
  
-  #   steps:
-  #   - uses: actions/checkout@v1
-  #     name: Checkout Code
-     
-  #   - name: Setup MSBuild Path
-  #     uses: warrenbuckley/Setup-MSBuild@v1
+    steps:
+    - uses: actions/checkout@v1
+      name: Checkout Code
+    - name: Setup MSBuild Path
+      uses: warrenbuckley/Setup-MSBuild@v1
        
-  #   - name: Setup NuGet
-  #     uses: NuGet/setup-nuget@v1.0.2
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
      
-  #   - name: Restore NuGet Packages
-  #     run: nuget restore SimpleFrameworkApp.sln
+    - name: Restore NuGet Packages
+      run: nuget install DalamudPackager
  
   #   - name: Build and Publish Web App
   #     run: msbuild SimpleFrameworkApp.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
@@ -32,29 +31,29 @@ jobs:
   #       name: published_webapp
   #       path: bin\Release\Publish
   
-  package:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    # - name: Setup .NET
-    #   uses: actions/setup-dotnet@v1
-    #   with:
-    #     dotnet-version: 5.0.x
-    # - name: Install dotnet-sdk-5.0
-    #   run: sudo apt-get install dotnet-sdk-5.0
-    # - name: Install dotnet-targeting-pack
-    #   run: dotnet tool install --global dotnet-targeting-pack
-    # - name: Install Targeting Pack
-    #   run: dotnet targeting-pack install net480
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore --framework net48
-    - name: Publish
-      run: dotnet publish DelvUIPlugin.csproj -c Release -o DelvUIPlugin
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.2
-      with:
-        name: DelvUIPlugin
-        path: DelvUIPlugin/**
-        if-no-files-found: error
+  # package:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   # - name: Setup .NET
+  #   #   uses: actions/setup-dotnet@v1
+  #   #   with:
+  #   #     dotnet-version: 5.0.x
+  #   # - name: Install dotnet-sdk-5.0
+  #   #   run: sudo apt-get install dotnet-sdk-5.0
+  #   # - name: Install dotnet-targeting-pack
+  #   #   run: dotnet tool install --global dotnet-targeting-pack
+  #   # - name: Install Targeting Pack
+  #   #   run: dotnet targeting-pack install net480
+  #   - name: Restore dependencies
+  #     run: dotnet restore
+  #   - name: Build
+  #     run: dotnet build --no-restore --framework net48
+  #   - name: Publish
+  #     run: dotnet publish DelvUIPlugin.csproj -c Release -o DelvUIPlugin
+  #   - name: Upload a Build Artifact
+  #     uses: actions/upload-artifact@v2.2.2
+  #     with:
+  #       name: DelvUIPlugin
+  #       path: DelvUIPlugin/**
+  #       if-no-files-found: error
