@@ -82,8 +82,9 @@ namespace DelvUI.Interface {
                     TargetManager.SetTarget(actor);
                 }
                 
-                ImGui.EndChild();
             }
+            
+            ImGui.EndChild();
         }
 
         protected virtual void DrawPrimaryResourceBar() {
@@ -111,7 +112,7 @@ namespace DelvUI.Interface {
                 return;
             }
 
-            var scale = (float) (actor.MaxHp > 0.00 ? actor.CurrentHp / actor.MaxHp : 0.00);
+            var scale = actor.MaxHp > 0f ? (float) actor.CurrentHp / actor.MaxHp : 0f;
             var cursorPos = new Vector2(CenterX + XOffset, CenterY + YOffset);
             ImGui.SetCursorPos(cursorPos);
  
@@ -141,7 +142,7 @@ namespace DelvUI.Interface {
             GameObject target = null;
             
             for (var i = 0; i < 200; i += 2) {
-                if (ObjectTable[i].ObjectId == targetActorId) {
+                if (ObjectTable[i]?.ObjectId == targetActorId) {
                     target = ObjectTable[i];
                 }
             }
@@ -176,9 +177,8 @@ namespace DelvUI.Interface {
                 if (ImGui.IsItemClicked()) {
                     TargetManager.SetTarget(target);
                 }
-                
-                ImGui.EndChild();
             }
+            ImGui.EndChild();
         }
 
         protected Dictionary<string, uint> DetermineTargetPlateColors(Character actor) {
